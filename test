@@ -1,0 +1,41 @@
+#!/usr/bin/env luajit
+
+
+AB5C  = require "ab5c"
+UTILS = require "ab5c.utils"
+CBLX  = require "ab5c.cblx"
+DBLX  = require "ab5c.dblx"
+FS    = require "ab5c.fs"
+
+local C = AB5C.create_ctn ()
+
+
+-- generate dblx
+  local cdef_d = DBLX.load_ctype('twostr','ctype')
+  --initdblocks
+
+  AB5C.dblx_new ( C , d_proto , str , str_inst )
+
+-- generate cblx
+  local ctags_c = FS.gen_ctags ('cptr_ekf','.h')
+  local cdef_c
+  FS.gen_cdef (ctags_c, cdef_c)
+  CBLX.gen_cproto (cdef_c)
+
+  --local cdef_c
+  --local cblx1_p = CBLX.gen_cproto (cdef_c)
+  --local cblx1   = create (cdef_c, 'cblx1')
+
+--cblx1 = create ( cblx1 , 'cblx1' )
+--dblx1 = 
+
+
+--connect ( cblx1 , str, dblx1)
+
+UTILS.pp_container(C)
+
+
+
+print(AB5C.check_container (C))
+
+
