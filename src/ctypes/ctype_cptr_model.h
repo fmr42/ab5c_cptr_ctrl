@@ -1,3 +1,7 @@
+#ifndef _CTYPE_CPTR_MODEL_
+#define _CTYPE_CPTR_MODEL_
+
+
 struct copter_model_t {
   double mass          ;
   double inertia [9]   ;
@@ -5,7 +9,6 @@ struct copter_model_t {
 //  double n_propeller ; // only 4 are supported
 //  char   frame_type  ; // X or T, only T is supported
   double arms_length   ;
-  double sampling_time ;
 
   double proc_noise_lin_pos ;
   double proc_noise_lin_vel ;
@@ -22,4 +25,6 @@ struct copter_model_t {
   
   char* type ; 
 };
+
+#endif
 

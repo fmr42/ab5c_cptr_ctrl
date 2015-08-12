@@ -1,3 +1,5 @@
+#ifndef _CTYPE_CPTR_CTRL_PARAMS__
+#define _CTYPE_CPTR_CTRL_PARAMS__
 
 struct cptr_ctrl_params_t {
   double l1 ;
@@ -14,4 +16,6 @@ struct cptr_ctrl_params_t {
   double hysteresis_thr ;
 
 };
+
+#endif
 

@@ -12,17 +12,17 @@ int cptr_ctrl (
   vec e3 = zeros<vec>(3); e3(2) = 1;
   mat J  = mat ( cptr_model->inertia , 3 , 3 , false , true );
   
-  vec Pr0 = vec ( sp->cptr_sp_lin_pos.data_vec , 3 , false , true );
-  vec Pr1 = vec ( sp->cptr_sp_lin_vel.data_vec , 3 , false , true );
-  vec Pr2 = vec ( sp->cptr_sp_lin_acc.data_vec , 3 , false , true );
-  vec Qr0 = vec ( sp->cptr_sp_ang_pos.data_vec , 4 , false , true );
-  vec Qr1 = vec ( sp->cptr_sp_ang_vel.data_vec , 4 , false , true );
-  vec Qr2 = vec ( sp->cptr_sp_ang_acc.data_vec , 4 , false , true );
+  vec Pr0 = vec ( sp->cptr_sp_lin_pos.vec.mem , 3 , false , true );
+  vec Pr1 = vec ( sp->cptr_sp_lin_vel.vec.mem , 3 , false , true );
+  vec Pr2 = vec ( sp->cptr_sp_lin_acc.vec.mem , 3 , false , true );
+  vec Qr0 = vec ( sp->cptr_sp_ang_pos.vec.mem , 4 , false , true );
+  vec Qr1 = vec ( sp->cptr_sp_ang_vel.vec.mem , 4 , false , true );
+  vec Qr2 = vec ( sp->cptr_sp_ang_acc.vec.mem , 4 , false , true );
 
-  vec P0 = vec( state->cptr_state_lin_pos.data_vec , 3 , false , true );
-  vec P1 = vec( state->cptr_state_lin_vel.data_vec , 3 , false , true );
-  vec Q0 = vec( state->cptr_state_ang_pos.data_vec , 4 , false , true );
-  vec Q1 = vec( state->cptr_state_ang_vel.data_vec , 4 , false , true );
+  vec P0 = vec( state->cptr_state_lin_pos.vec.mem , 3 , false , true );
+  vec P1 = vec( state->cptr_state_lin_vel.vec.mem , 3 , false , true );
+  vec Q0 = vec( state->cptr_state_ang_pos.vec.mem , 4 , false , true );
+  vec Q1 = vec( state->cptr_state_ang_vel.vec.mem , 4 , false , true );
 
   vec Qc0_old = vec ( ctrl_state->Qc0_old , 4 , false , true );
   vec Qc1_old = vec ( ctrl_state->Qc0_old , 4 , false , true );

@@ -4,15 +4,15 @@
 #include <iostream>
 #include <ctime>
 #include <armadillo>
-#include "../../ctypes/cptr_state-ctype.h"
-#include "../../ctypes/cptr_vectores_thrust_input-ctype.h"
-#include "../../ctypes/cptr_model-ctype.h"
-#include "../../ctypes/cptr_sp-ctype.h"
-#include "../../ctypes/cptr_ctrl_state-ctype.h"
-#include "../../ctypes/cptr_ctrl_params-ctype.h"
+#include "../../ctypes/ctype_cptr_state.h"
+#include "../../ctypes/ctype_cptr_vectored_thrust_input.h"
+#include "../../ctypes/ctype_cptr_model.h"
+#include "../../ctypes/ctype_cptr_sp.h"
+#include "../../ctypes/ctype_cptr_ctrl_state.h"
+#include "../../ctypes/ctype_cptr_ctrl_params.h"
+#include "../../ctypes/ctype_cptr_time.h"
 #include "../../lib/arma_quaternion_lib.cpp"
 #include "ctrl_functions.cpp"
-
 
 #define UBX_NO_DEBUG
 //#define ARMA_NO_DEBUG
@@ -30,10 +30,10 @@ int cptr_ctrl (
  struct copter_model_t               *cptr_model  ,
  struct cptr_ctrl_params_t           *params      );
 
+
 #ifdef __cplusplus
  }
 #endif
-
 
 #endif
 

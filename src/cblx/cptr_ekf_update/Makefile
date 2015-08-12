@@ -1,4 +1,7 @@
 default:
 	g++ -Wall -shared -fPIC -o cptr_ekf_predict.so cptr_ekf_predict.cpp
+
+
 clean:
-	rm -f *.o *.so *.a
+	rm *.o *.so *.a -f
+
