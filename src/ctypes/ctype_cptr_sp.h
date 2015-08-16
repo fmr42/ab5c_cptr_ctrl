@@ -1,13 +1,16 @@
 #ifndef _CTYPE_CPTR_SP_
 #define _CTYPE_CPTR_SP_
 
+
+#include "ctype_cptr_primitives_sp.h"
+
 struct cptr_sp_t {
-  struct cptr_sp_lin_pos_t     cptr_sp_lin_pos ;
-  struct cptr_sp_lin_vel_t     cptr_sp_lin_vel ;
-  struct cptr_sp_lin_acc_t     cptr_sp_lin_acc ;
-  struct cptr_sp_ang_pos_t     cptr_sp_ang_pos ;
-  struct cptr_sp_ang_vel_t     cptr_sp_ang_vel ;
-  struct cptr_sp_ang_acc_t     cptr_sp_ang_acc ;
+  struct cptr_sp_linpos_t     cptr_sp_linpos ;
+  struct cptr_sp_linvel_t     cptr_sp_linvel ;
+  struct cptr_sp_linacc_t     cptr_sp_linacc ;
+  struct cptr_sp_angpos_t     cptr_sp_angpos ;
+  struct cptr_sp_angvel_t     cptr_sp_angvel ;
+  struct cptr_sp_angacc_t     cptr_sp_angacc ;
   const char*  type;
 };
 

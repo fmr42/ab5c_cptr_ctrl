@@ -2,7 +2,7 @@
 #define _CTYPE_CPTR_MODEL_
 
 
-struct copter_model_t {
+struct cptr_model_t {
   double mass          ;
   double inertia [9]   ;
 
@@ -10,10 +10,10 @@ struct copter_model_t {
 //  char   frame_type  ; // X or T, only T is supported
   double arms_length   ;
 
-  double proc_noise_lin_pos ;
-  double proc_noise_lin_vel ;
-  double proc_noise_ang_pos ; 
-  double proc_noise_ang_vel ;
+  double proc_noise_linpos ;
+  double proc_noise_linvel ;
+  double proc_noise_angpos ; 
+  double proc_noise_angvel ;
 
   double gravity ;
 

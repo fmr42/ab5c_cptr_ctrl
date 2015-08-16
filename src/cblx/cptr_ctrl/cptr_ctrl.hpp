@@ -5,12 +5,11 @@
 #include <ctime>
 #include <armadillo>
 #include "../../ctypes/ctype_cptr_state.h"
-#include "../../ctypes/ctype_cptr_vectored_thrust_input.h"
+#include "../../ctypes/ctype_cptr_ctrlaction.h"
 #include "../../ctypes/ctype_cptr_model.h"
 #include "../../ctypes/ctype_cptr_sp.h"
 #include "../../ctypes/ctype_cptr_ctrl_state.h"
 #include "../../ctypes/ctype_cptr_ctrl_params.h"
-#include "../../ctypes/ctype_cptr_time.h"
 #include "../../lib/arma_quaternion_lib.cpp"
 #include "ctrl_functions.cpp"
 
@@ -23,11 +22,11 @@
 
 
 int cptr_ctrl (
- struct cptr_vectored_thrust_input_t *action      ,
+ struct cptr_ctrlaction_t            *action      ,
  struct cptr_sp_t                    *sp          ,
  struct cptr_state_t                 *state       ,
  struct cptr_ctrl_state_t            *ctrl_state  ,
- struct copter_model_t               *cptr_model  ,
+ struct cptr_model_t                 *cptr_model  ,
  struct cptr_ctrl_params_t           *params      );
 
 

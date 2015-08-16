@@ -2,32 +2,32 @@
 
 
 int cptr_ctrl (
-  struct cptr_vectored_thrust_input_t *action      ,
+  struct cptr_ctrlaction_t            *action      ,
   struct cptr_sp_t                    *sp          ,
   struct cptr_state_t                 *state       ,
   struct cptr_ctrl_state_t            *ctrl_state  ,
-  struct copter_model_t               *cptr_model  ,
+  struct cptr_model_t                 *cptr_model  ,
   struct cptr_ctrl_params_t           *params      ) {
   
   vec e3 = zeros<vec>(3); e3(2) = 1;
   mat J  = mat ( cptr_model->inertia , 3 , 3 , false , true );
   
-  vec Pr0 = vec ( sp->cptr_sp_lin_pos.vec.mem , 3 , false , true );
-  vec Pr1 = vec ( sp->cptr_sp_lin_vel.vec.mem , 3 , false , true );
-  vec Pr2 = vec ( sp->cptr_sp_lin_acc.vec.mem , 3 , false , true );
-  vec Qr0 = vec ( sp->cptr_sp_ang_pos.vec.mem , 4 , false , true );
-  vec Qr1 = vec ( sp->cptr_sp_ang_vel.vec.mem , 4 , false , true );
-  vec Qr2 = vec ( sp->cptr_sp_ang_acc.vec.mem , 4 , false , true );
+  vec Pr0 = vec ( sp->cptr_sp_linpos.vec.mem , 3 , false , true );
+  vec Pr1 = vec ( sp->cptr_sp_linvel.vec.mem , 3 , false , true );
+  vec Pr2 = vec ( sp->cptr_sp_linacc.vec.mem , 3 , false , true );
+  vec Qr0 = vec ( sp->cptr_sp_angpos.vec.mem , 4 , false , true );
+  vec Qr1 = vec ( sp->cptr_sp_angvel.vec.mem , 4 , false , true );
+  vec Qr2 = vec ( sp->cptr_sp_angacc.vec.mem , 4 , false , true );
 
-  vec P0 = vec( state->cptr_state_lin_pos.vec.mem , 3 , false , true );
-  vec P1 = vec( state->cptr_state_lin_vel.vec.mem , 3 , false , true );
-  vec Q0 = vec( state->cptr_state_ang_pos.vec.mem , 4 , false , true );
-  vec Q1 = vec( state->cptr_state_ang_vel.vec.mem , 4 , false , true );
+  vec P0 = vec( state->linpos.vec.mem , 3 , false , true );
+  vec P1 = vec( state->linvel.vec.mem , 3 , false , true );
+  vec Q0 = vec( state->angpos.vec.mem , 4 , false , true );
+  vec Q1 = vec( state->angvel.vec.mem , 4 , false , true );
 
   vec Qc0_old = vec ( ctrl_state->Qc0_old , 4 , false , true );
   vec Qc1_old = vec ( ctrl_state->Qc0_old , 4 , false , true );
 
-  vec Ut = vec ( action->torque , 3 , false , true );
+  vec Ut = vec ( action->torque.mem , 3 , false , true );
   
   vec W0 = zeros<vec>(4) ;
   vec W1 = zeros<vec>(4) ;
@@ -42,7 +42,7 @@ int cptr_ctrl (
   // Compute control thrust
   vec Vc0 = Vcr0 + k0 ;
   // Compute thrust
-  action->thrust = norm ( Vc0 , 2 ) ;
+  action->thrust.data = norm ( Vc0 , 2 ) ;
   
   // Compute control orientation 			
   mat Rc0 = zeros<mat>(3,3);
@@ -78,10 +78,10 @@ int cptr_ctrl (
   vec UtFB = - params->kp * ctrl_state->hysteresis * Qe0.subvec(1,3) - params->kd * We0.subvec(1,3) ;
   Ut = UtFB + UtFF ;
 
-  if ( action->thrust >= 0 ) {
-    action->thrust = std::min ( +cptr_model->max_thrust , action->thrust ) ;
+  if ( action->thrust.data >= 0 ) {
+    action->thrust.data = std::min ( +cptr_model->max_thrust , action->thrust.data ) ;
   }else{
-    action->thrust = std::max ( -cptr_model->max_thrust , action->thrust ) ;
+    action->thrust.data = std::max ( -cptr_model->max_thrust , action->thrust.data ) ;
   }
   
   for (int i = 0 ; i<3 ; i++ ){
