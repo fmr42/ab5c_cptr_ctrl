@@ -18,18 +18,18 @@ int cptr_ekf_predict (
   
   vec    Ut     = vec (cptr_input->torque.mem , 3, false, true) ;
 
-  vec Q0_old    = vec (state_old->angpos.vec.mem , 4 , true , true ) ;
-  vec Q1_old    = vec (state_old->angvel.vec.mem , 4 , true , true ) ;
+  vec Q0_old    = vec (state_old->angpos.mem , 4 , true , true ) ;
+  vec Q1_old    = vec (state_old->angvel.mem , 4 , true , true ) ;
 
   // Old and new data point to the same memory trunk, so copy the old value before overwrite it!!!
-  vec P0_old = vec ( state_old->linpos.vec.mem , 3 , true , true) ;
-  vec P1_old = vec ( state_old->linvel.vec.mem , 3 , true , true) ;
+  vec P0_old = vec ( state_old->linpos.mem , 3 , true , true) ;
+  vec P1_old = vec ( state_old->linvel.mem , 3 , true , true) ;
 
   // Do _NOT_ copy the data or new values will not be written out!!!
-  vec P0_new = vec (state_new->linpos.vec.mem , 3 , false, true) ;
-  vec P1_new = vec (state_new->linvel.vec.mem , 3 , false, true) ;
-  vec Q0_new = vec (state_new->angpos.vec.mem , 4 , false, true) ;
-  vec Q1_new = vec (state_new->angvel.vec.mem , 4 , false, true) ;
+  vec P0_new = vec (state_new->linpos.mem , 3 , false, true) ;
+  vec P1_new = vec (state_new->linvel.mem , 3 , false, true) ;
+  vec Q0_new = vec (state_new->angpos.mem , 4 , false, true) ;
+  vec Q1_new = vec (state_new->angvel.mem , 4 , false, true) ;
 
   // These will be computed later...
   vec P2_old = zeros<vec>(3) ;
@@ -40,6 +40,7 @@ int cptr_ekf_predict (
   vec W0_new = zeros<vec>(4) ;
   vec W1_new = zeros<vec>(4) ;
   mat J = mat ( cptr_model->inertia , 3 , 3 , false, true) ;
+
 
   // Do computation!!
   (W0_old).subvec(1,3) = arma_quat_d_to_vel ( Q0_old, Q1_old ) ;
@@ -55,29 +56,13 @@ int cptr_ekf_predict (
   Q0_new = normalise( Q0_old + Q1_old * dt + 0.5 * Q2_old * dt ) ;
   Q1_new = Q1_old + Q2_old * dt ;
 
-
-  mat COV_old = zeros (14,14) ;
-  COV_old.submat(0,0,2,2)     = mat ( state_old->linpos_linpos_crosscov.mem , 3 , 3 , true , true ) ;
-  COV_old.submat(3,3,5,5)     = mat ( state_old->linvel_linvel_crosscov.mem , 3 , 3 , true , true ) ;
-  COV_old.submat(6,6,9,9)     = mat ( state_old->angpos_angpos_crosscov.mem , 4 , 4 , true , true ) ;
-  COV_old.submat(10,10,13,13) = mat ( state_old->angvel_angvel_crosscov.mem , 4 , 4 , true , true ) ;
-  // state transition matrix
-  mat A = eye<mat>( 14,14 ) ;
-  A.submat(0,3,2,5)   = eye(3,3) * dt ;
-  A.submat(6,12,9,15) = eye(4,4) * dt ;
-
-//  COV_new.submat(0,0,2,2)     = mat ( state_new->linpos_linpos_crosscov.mem , 3 , 3 , false , true ) ;
-//  COV_new.submat(3,3,5,5)     = mat ( state_new->linvel_linvel_crosscov.mem , 3 , 3 , false , true ) ;
-//  COV_new.submat(6,6,9,9)     = mat ( state_new->angpos_angpos_crosscov.mem , 4 , 4 , false , true ) ;
-//  COV_new.submat(10,10,13,13) = mat ( state_new->angvel_angvel_crosscov.mem , 4 , 4 , false , true ) ;
- 
-
+  // Generate process noise covariance mat
+  //
   mat Q_p0 =  eye (3,3) * cptr_model->proc_noise_linpos ;
   mat Q_p1 =  eye (3,3) * cptr_model->proc_noise_linvel ;
   mat Q_q0 =  eye (4,4) * cptr_model->proc_noise_angpos ;
   mat Q_q1 =  eye (4,4) * cptr_model->proc_noise_angvel ;
 
-//  mat COV_new  = A * COV_old * A.i() + Q ;
 
   mat covnew_p0p0 = mat ( state_new->linpos_linpos_crosscov.mem , 3 , 3 , false , true ) ;
   mat covnew_p0p1 = mat ( state_new->linpos_linvel_crosscov.mem , 3 , 3 , false , true ) ;
@@ -110,16 +95,30 @@ int cptr_ekf_predict (
 
 
 
+  // TODO something wrong with this... transpose should be used somewhere...
+  //          | p0p0 p0p1 p0q0 p0q1 |   
+  // covnew = |      p1p1 p1q0 p1q1 | = F * covold * F_t + Q    =
+  //          |           q0q0 q0q1 |
+  //          |                q1q1 |
+  //
+  //
+  //        = 
+  //
+  //
+  //
 
-  covnew_p0p0 = covold_p0p0 + 2 * covold_p0p1 * dt + covold_p1p1 * dt * dt                        + Q_p0 ;
+  covnew_p0p0 = covold_p0p0 + covold_p0p1 * dt + covold_p0p1.t() * dt + covold_p1p1 * dt * dt    + Q_p0  ;
   covnew_p0p1 = covold_p0p1 + covold_p1p1 * dt                                                           ;
-  covnew_p0q0 = covold_p0q1 + covold_p0q0 * dt + covold_p1q0 * dt + covold_p1q1 * dt * dt                ;
+  covnew_p0q0 = covold_p0q0 + covold_p0q1 * dt + covold_p1q0     * dt + covold_p1q1 * dt                 ;
   covnew_p0q1 = covold_p0q1 + covold_p1q1 * dt                                                           ;
+
   covnew_p1p1 = covold_p1p1                                                                       + Q_p1 ;
   covnew_p1q0 = covold_p1q0 + covold_p1q1 * dt                                                           ;
-  covnew_p1q1 = covold_p1q1                                                                       + Q_q0 ;
-  covnew_q0q0 = covold_q0q0 + 2 * covold_q0q1 * dt + covold_q1q1 * dt * dt                               ;
+  covnew_p1q1 = covold_p1q1                                                                              ;
+
+  covnew_q0q0 = covold_q0q0 + covold_q0q1 * dt + covold_q0q1.t() * dt + covold_q1q1 * dt * dt   + Q_q0   ;
   covnew_q0q1 = covold_q0q1 + covold_q1q1 * dt                                                           ;
+
   covnew_q1q1 = covold_q1q1                                                                       + Q_q1 ;
 
   return 0;

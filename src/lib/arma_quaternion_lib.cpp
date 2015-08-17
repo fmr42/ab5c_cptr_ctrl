@@ -1,8 +1,5 @@
-#ifndef _ARMA_QUATERNION_LIB_H_
-#define _ARMA_QUATERNION_LIB_H_
 
-#include <armadillo>
-using namespace arma;
+#include "arma_quaternion_lib.hpp"
 
 
 //return the hamilton product between a and b
@@ -125,6 +122,4 @@ vec arma_mat_to_q ( const mat& R ) {
 
 	return ( q ) ;
 }
-
-#endif
 

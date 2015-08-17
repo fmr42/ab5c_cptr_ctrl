@@ -12,17 +12,17 @@ int cptr_ctrl (
   vec e3 = zeros<vec>(3); e3(2) = 1;
   mat J  = mat ( cptr_model->inertia , 3 , 3 , false , true );
   
-  vec Pr0 = vec ( sp->cptr_sp_linpos.vec.mem , 3 , false , true );
-  vec Pr1 = vec ( sp->cptr_sp_linvel.vec.mem , 3 , false , true );
-  vec Pr2 = vec ( sp->cptr_sp_linacc.vec.mem , 3 , false , true );
-  vec Qr0 = vec ( sp->cptr_sp_angpos.vec.mem , 4 , false , true );
-  vec Qr1 = vec ( sp->cptr_sp_angvel.vec.mem , 4 , false , true );
-  vec Qr2 = vec ( sp->cptr_sp_angacc.vec.mem , 4 , false , true );
+  vec Pr0 = vec ( sp->linpos_sp.mem , 3 , false , true );
+  vec Pr1 = vec ( sp->linvel_sp.mem , 3 , false , true );
+  vec Pr2 = vec ( sp->linacc_sp.mem , 3 , false , true );
+  vec Qr0 = vec ( sp->angpos_sp.mem , 4 , false , true );
+  vec Qr1 = vec ( sp->angvel_sp.mem , 4 , false , true );
+  vec Qr2 = vec ( sp->angacc_sp.mem , 4 , false , true );
 
-  vec P0 = vec( state->linpos.vec.mem , 3 , false , true );
-  vec P1 = vec( state->linvel.vec.mem , 3 , false , true );
-  vec Q0 = vec( state->angpos.vec.mem , 4 , false , true );
-  vec Q1 = vec( state->angvel.vec.mem , 4 , false , true );
+  vec P0 = vec( state->linpos.mem , 3 , false , true );
+  vec P1 = vec( state->linvel.mem , 3 , false , true );
+  vec Q0 = vec( state->angpos.mem , 4 , false , true );
+  vec Q1 = vec( state->angvel.mem , 4 , false , true );
 
   vec Qc0_old = vec ( ctrl_state->Qc0_old , 4 , false , true );
   vec Qc1_old = vec ( ctrl_state->Qc0_old , 4 , false , true );

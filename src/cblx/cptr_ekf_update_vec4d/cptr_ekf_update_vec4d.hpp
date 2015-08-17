@@ -18,10 +18,10 @@
 
 
 int cptr_ekf_update_vec4d (
- struct state_t                      *state_old      ,
- struct state_t                      *state_new      ,
- struct obsmodel_state_to_vec4d_t    *obsmodel       ,
- struct sensdata_t                   *sensdata       );
+ struct cptr_state_t                      *state_old     ,
+ struct cptr_state_t                      *state_new     ,
+ struct cptr_obsmodel_state_to_vec4d_t    *obsmodel      ,
+ struct cptr_sensdata_4d_t                *sensdata      );
 
 #ifdef __cplusplus
  }

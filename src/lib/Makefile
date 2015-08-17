@@ -1,8 +1,7 @@
 default:
-	g++ -c arma_quaternion_lib.cpp
-	ar rvs arma_quaternion_lib.a arma_quaternion_lib.o
+	g++ -Wall -c arma_quaternion_lib.cpp -o arma_quaternion_lib.o
+#	g++ -Wall -shared -fPIC -o cptr_ekf_predict.so cptr_ekf_predict.o
 
 clean:
-	rm *.a
-	rm *.o
+	rm  -f *.o
 

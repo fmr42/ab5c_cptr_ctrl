@@ -136,19 +136,18 @@ struct cptr_obsmodel_vec3d_to_vec4d_t{
   union {
     struct {
       double x_to_w;
-      double y_to_w;
-      double z_to_w;
-
       double x_to_x;
-      double y_to_x;
-      double z_to_x;
-
       double x_to_y;
-      double y_to_y;
-      double z_to_y;
-
       double x_to_z;
+
+      double y_to_w;
+      double y_to_x;
+      double y_to_y;
       double y_to_z;
+
+      double z_to_w;
+      double z_to_x;
+      double z_to_y;
       double z_to_z;
     } data;
     double mem[12];
@@ -156,6 +155,30 @@ struct cptr_obsmodel_vec3d_to_vec4d_t{
   char *type;
 };
 
+
+struct cptr_obsmodel_vec4d_to_vec3d_t{
+  union {
+    struct {
+      double w_to_x;
+      double w_to_y;
+      double w_to_z;
+
+      double x_to_x;
+      double x_to_y;
+      double x_to_z;
+
+      double y_to_x;
+      double y_to_y;
+      double y_to_z;
+
+      double z_to_x;
+      double z_to_y;
+      double z_to_z;
+    } data;
+    double mem[12];
+  };
+  char *type;
+};
 
 #endif
 

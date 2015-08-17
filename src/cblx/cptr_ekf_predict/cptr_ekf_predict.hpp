@@ -7,7 +7,7 @@
 #include "../../ctypes/ctype_cptr_state.h"
 #include "../../ctypes/ctype_cptr_ctrlaction.h"
 #include "../../ctypes/ctype_cptr_model.h"
-#include "../../lib/arma_quaternion_lib.cpp"
+#include "../../lib/arma_quaternion_lib.hpp"
 
 #define UBX_NO_DEBUG
 //#define ARMA_NO_DEBUG
