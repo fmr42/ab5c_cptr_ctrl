@@ -1,6 +1,5 @@
-#include <armadillo>
-using namespace arma;
 
+#include "cptr_ctrl_aux_fun.hpp"
 
 /*
 * Implements the saturate function using the polynomial

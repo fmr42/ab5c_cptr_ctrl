@@ -1,14 +1,14 @@
 #include <iostream>
 #include <armadillo>
 
-#include "../ctypes/ctype_cptr_ctrlaction.h"
-#include "../ctypes/ctype_cptr_ctrl_params.h"
-#include "../ctypes/ctype_cptr_ctrl_state.h"
-#include "../ctypes/ctype_cptr_model.h"
-#include "../ctypes/ctype_cptr_sp.h"
-#include "../ctypes/ctype_cptr_state.h"
+#include "../../ctypes/ctype_cptr_ctrlaction.h"
+#include "../../ctypes/ctype_cptr_ctrl_params.h"
+#include "../../ctypes/ctype_cptr_ctrl_state.h"
+#include "../../ctypes/ctype_cptr_model.h"
+#include "../../ctypes/ctype_cptr_sp.h"
+#include "../../ctypes/ctype_cptr_state.h"
 
-#include "../cblx/cptr_ekf_predict/cptr_ekf_predict.hpp"
+#include "../../cblx/cptr_ekf_predict/cptr_ekf_predict.hpp"
 
 using namespace arma;
 using namespace std;

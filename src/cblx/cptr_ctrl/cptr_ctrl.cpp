@@ -55,7 +55,6 @@ int cptr_ctrl (
   mat Qc0 = arma_mat_to_q(Rc0);
   mat Qc1 = Qc0 - Qc0_old ;
   mat Qc2 = Qc1 - Qc1_old ;
-	
   Wc0.subvec(1,3) = arma_quat_d_to_vel( Qc0 , Qc1 );
   //Wc1.subvec(1,3) = arma_quat_d_to_acc( Qc0 , Qc1 , Qc2 );
   // Compute error coordinates
@@ -64,8 +63,9 @@ int cptr_ctrl (
   
   W0.subvec(1,3) = arma_quat_d_to_vel (Q0 , Q1 );
   mat Re = arma_rodriguez(Qe0);
-  vec Wce0 = zeros<vec>(3)         ;
-  (Wce0).subvec(1,3) = Re.t() * (Wc0).subvec(1,3);
+  vec Wce0 = zeros<vec>(4)         ;
+  Wce0.subvec(1,3) = Re.t() * Wc0.subvec(1,3);
+
   vec We0  = W0 - Wce0 ;
 
   // Update hysteresis

@@ -1,5 +1,5 @@
-#ifndef _CPTR_EKF_PREDICT_H_
-#define _CPTR_EKF_PREDICT_H_
+#ifndef _CPTR_CTRL_H_
+#define _CPTR_CTRL_H_
 
 #include <iostream>
 #include <ctime>
@@ -10,8 +10,9 @@
 #include "../../ctypes/ctype_cptr_sp.h"
 #include "../../ctypes/ctype_cptr_ctrl_state.h"
 #include "../../ctypes/ctype_cptr_ctrl_params.h"
-#include "../../lib/arma_quaternion_lib.cpp"
-#include "ctrl_functions.cpp"
+
+#include "../../lib/arma_quaternion_lib.hpp"
+#include "../../lib/cptr_ctrl_aux_fun.hpp"
 
 #define UBX_NO_DEBUG
 //#define ARMA_NO_DEBUG
