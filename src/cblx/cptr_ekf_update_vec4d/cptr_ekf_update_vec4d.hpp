@@ -2,7 +2,6 @@
 #define _CPTR_EKF_UPDATE_H_
 
 #include <iostream>
-#include <ctime>
 #include <armadillo>
 #include "../../ctypes/ctype_cptr_state.h"
 #include "../../ctypes/ctype_cptr_sensdata.h"
